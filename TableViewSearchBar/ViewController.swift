@@ -258,31 +258,43 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if searching {
             return searchingNames.count
         }
         else {
             return data.count
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        
         if searching {
             cell?.textLabel?.text = searchingNames[indexPath.row]
         } else {
             cell?.textLabel?.text = data[indexPath.row]
         }
-        
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
     
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        
+        if searching {
+            searchingNames.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else {
+            data.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        
+        tableView.endUpdates()
+        
+    }
 }
 
 
