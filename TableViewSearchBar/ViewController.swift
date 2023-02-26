@@ -285,4 +285,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-
+extension ViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchingNames = data.filter({ $0.prefix(searchText.count)  == searchText})
+        searching = true
+        tableView.reloadData()
+    }
+}
