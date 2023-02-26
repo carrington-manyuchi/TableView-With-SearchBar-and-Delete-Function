@@ -249,7 +249,16 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-
+    @IBAction func selectedButton(_ sender: UIBarButtonItem) {
+        
+        if tableView.isEditing {
+            tableView.isEditing = false
+            
+        } else {
+            tableView.isEditing = true
+        }
+    }
+    
 }
 
 
@@ -294,6 +303,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         tableView.endUpdates()
         
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        data.swapAt(sourceIndexPath.row, destinationIndexPath.row)
     }
 }
 
